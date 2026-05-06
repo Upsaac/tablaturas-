@@ -54,4 +54,18 @@ defmodule TablatureTest do
   assert Tablature.parse(tab) == expected
   end
 
+  test "Stairway to Heaven (multiple strings)" do
+    # se modifico el texto ya que tenia caracteres raros, y daba problemas
+    tab = """
+          e|-------5-7-----7-|
+          B|-----5-----5-----|
+          G|---5---------5---|
+          D|-7-------6-------|
+          A|-----------------|
+          E|-----------------|
+          """
+    expected = "D7 G5 B5 e5 e7/D6 B5 G5 e7"
+    assert Tablature.parse(tab) == expected
+  end
+
 end

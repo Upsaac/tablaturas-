@@ -14,8 +14,18 @@ defmodule Tablature do
         {col_idx, row_idx, "#{label}#{digit}"}
       end)
     end)
+    # Agrupamos notas que comparten la misma columna
+    |> Enum.group_by(fn {col, _row, _val} -> col end)
+    # Ordenamos las cubetas por tiempo
     |> Enum.sort()
-    |> Enum.map(fn {_, _, note} -> note end)
+    |> Enum.map(fn {_col_idx, notes_in_column} ->
+      notes_in_column
+      |> Enum.sort_by(fn {_col, row, _val} -> row end) # Ordenar cuerdas: e, B, G...
+      |> Enum.map(fn {_, _, val} -> val end)
+      |> Enum.join("/") # Unimos notas simultáneas
+    end)
+
     |> Enum.join(" ")
+
   end
 end
